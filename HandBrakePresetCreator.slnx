@@ -1,7 +1,8 @@
 <Solution>
   <Configurations>
     <Platform Name="x64" />
-    <Platform Name="x86" />
+
   </Configurations>
   <Project Path="HandBrakePresetCreator.vcxproj" />
+  <Project Path="tests/HandBrakePresetCreator.Tests.vcxproj" />
 </Solution>

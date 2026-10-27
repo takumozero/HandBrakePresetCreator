@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{2b2ade0c-6018-4fc7-a580-539084c9702d}</ProjectGuid>
+    <RootNamespace>HandBrakePresetCreatorTests</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Debug'">true</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Release'">false</UseDebugLibraries>
+    <WholeProgramOptimization Condition="'$(Configuration)'=='Release'">true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\Qt.local.props" Condition="Exists('$(MSBuildThisFileDirectory)..\Qt.local.props')" />
+  <PropertyGroup>
+    <QtRoot Condition="'$(QtRoot)'=='' and '$(QT_ROOT)'!=''">$(QT_ROOT)</QtRoot>
+    <OutDir>$(ProjectDir)..\build\$(Configuration)\tests\</OutDir>
+    <IntDir>$(ProjectDir)..\build\obj\tests\$(Configuration)\</IntDir>
+    <QtLibrarySuffix Condition="'$(Configuration)'=='Debug'">d</QtLibrarySuffix>
+    <LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerEnvironment>PATH=$(QtRoot)\bin;%PATH%&#xA;QT_QPA_PLATFORM_PLUGIN_PATH=$(QtRoot)\plugins\platforms</LocalDebuggerEnvironment>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <AdditionalIncludeDirectories>$(QtRoot)\include;$(QtRoot)\include\QtCore;$(QtRoot)\include\QtGui;$(QtRoot)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 /Zc:__cplusplus /external:I&quot;$(QtRoot)\include&quot; %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(QtRoot)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Qt6Widgets$(QtLibrarySuffix).lib;Qt6Gui$(QtLibrarySuffix).lib;Qt6Core$(QtLibrarySuffix).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Manifest><EnableSegmentHeap>true</EnableSegmentHeap></Manifest>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClInclude Include="..\editor.h" />
+    <ClInclude Include="..\easyview.h" />
+    <ClInclude Include="..\handbrakeoptions.h" />
+    <ClInclude Include="..\theme.h" />
+    <ClInclude Include="..\presetdocument.h" />
+    <ClInclude Include="EditorTests.h" />
+    <ClInclude Include="DocumentTests.h" />
+  </ItemGroup>
+  <Target Name="CheckQtInstallation" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(Platform)'!='x64'" Text="Select the x64 solution platform; this project uses an MSVC x64 Qt kit." />
+    <Error Condition="'$(QtRoot)'==''" Text="Set QT_ROOT, pass /p:QtRoot=your-kit-path, or copy Qt.local.props.example to Qt.local.props and edit its QtRoot value." />
+    <Error Condition="!Exists('$(QtRoot)\include\QtWidgets\QApplication')" Text="Qt Widgets was not found under QtRoot. Choose the Qt MSVC x64 kit, not the top-level installer directory or a MinGW kit." />
+  </Target>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

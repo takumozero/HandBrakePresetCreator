@@ -14,4 +14,4 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
-<ItemGroup><ClCompile Include="main.cpp"><Filter>Source Files</Filter></ClCompile></ItemGroup></Project>
+<ItemGroup><ClCompile Include="main.cpp"><Filter>Source Files</Filter></ClCompile></ItemGroup><ItemGroup><ClInclude Include="editor.h"><Filter>Header Files</Filter></ClInclude><ClInclude Include="presetdocument.h"><Filter>Header Files</Filter></ClInclude></ItemGroup><ItemGroup><ClInclude Include="easyview.h"><Filter>Header Files</Filter></ClInclude></ItemGroup><ItemGroup><ClInclude Include="theme.h"><Filter>Header Files</Filter></ClInclude></ItemGroup><ItemGroup><ClInclude Include="handbrakeoptions.h"><Filter>Header Files</Filter></ClInclude></ItemGroup></Project>
