@@ -143,7 +143,33 @@
     </Manifest>
   </ItemDefinitionGroup>
 
-  <ItemGroup></ItemGroup>
+  <PropertyGroup>
+    <QtRoot Condition="'$(QtRoot)'==''">C:\Qt\6.12.0\msvc2022_64</QtRoot>
+    <QtLibrarySuffix Condition="'$(Configuration)'=='Debug'">d</QtLibrarySuffix>
+    <LocalDebuggerEnvironment>PATH=$(QtRoot)\bin;%PATH%&#xA;QT_QPA_PLATFORM_PLUGIN_PATH=$(QtRoot)\plugins\platforms</LocalDebuggerEnvironment>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(QtRoot)\include;$(QtRoot)\include\QtCore;$(QtRoot)\include\QtGui;$(QtRoot)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <AdditionalOptions>/utf-8 /Zc:__cplusplus /external:I&quot;$(QtRoot)\include&quot; %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(QtRoot)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Qt6Widgets$(QtLibrarySuffix).lib;Qt6Gui$(QtLibrarySuffix).lib;Qt6Core$(QtLibrarySuffix).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <Target Name="CheckQtInstallation" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(Platform)'!='x64'" Text="This Qt kit requires x64. Select the x64 solution platform." />
+    <Error Condition="!Exists('$(QtRoot)\include\QtWidgets\QApplication')" Text="Qt Widgets was not found. Set QtRoot to your MSVC x64 Qt kit directory." />
+  </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
